@@ -1,0 +1,2 @@
+BẢNG ĐIỂM TỔNG KẾT:
+{'faithfulness': 0.7330, 'answer_relevancy': 0.6142, 'context_precision': 0.7333}

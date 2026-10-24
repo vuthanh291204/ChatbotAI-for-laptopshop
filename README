@@ -1,0 +1,45 @@
+💻 Chatbot AI Tư vấn Laptop (Agentic RAG)
+Dự án xây dựng trợ lý ảo tư vấn laptop tự động ứng dụng kiến trúc Agentic RAG (Retrieval-Augmented Generation). Hệ thống có khả năng tìm kiếm sản phẩm theo cấu trúc và giải đáp chính sách bằng ngôn ngữ tự nhiên, tích hợp đánh giá tự động bằng Ragas. Đồ án thuộc học phần IT3931.
+
+🌟 Tính Năng Nổi Bật
+- Agentic RAG (Function Calling): Không sử dụng RAG tuyến tính thông thường. Hệ thống tự động định tuyến ý định của người dùng để gọi công cụ phù hợp:
+  * *Luồng 1 (Dữ liệu cấu trúc): Tự động biên dịch câu hỏi thành lệnh Pandas Query để tra cứu giá/thông số kỹ thuật.
+  * *Luồng 2 (Dữ liệu phi cấu trúc): Sử dụng ChromaDB để truy xuất không gian vector, giải đáp các chính sách (bảo hành, đổi trả...).
+- Giao Diện Trực Quan: Tích hợp giao diện web thương mại điện tử bằng Streamlit với bong bóng chat tiện dụng.
+- Đánh Giá Tự Động (LLM-as-a-Judge): Tích hợp thư viện Ragas để đo lường định lượng các chỉ số (Context Precision, Faithfulness, Answer Relevancy) bằng mô hình Llama 3.
+
+🚀 Công nghệ sử dụng
+- LLM Core: Gemini 2.5 Flash (chatbot), Llama 3 70B (qua Groq API), OpenAI GPT-4o-mini (sinh tập test)
+- Vector Database: ChromaDB
+- Embedding: HuggingFace (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`)
+- Framework: LangChain, Streamlit
+- Xử lý dữ liệu: BeautifulSoup4, Pandas, Regex
+
+⚙️ Hướng dẫn cài đặt và sử dụng
+1. Cài đặt môi trường
+Cài đặt các thư viện cần thiết bằng lệnh sau:
+```bash
+pip install -r requirements.txt
+```
+2. Thiết lập API Key
+Tạo file `.env` ở thư mục gốc của dự án và thêm các API key của bạn:
+```env
+GOOGLE_API_KEY=your_gemini_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
+```
+3. Thu thập và Xử lý dữ liệu (Chạy tuần tự)
+Do dữ liệu được cào trực tiếp từ website thực tế bằng Python, bạn cần chạy các file code tương ứng để chuẩn bị kho tri thức:
+- Cào dữ liệu (Scraping): Chạy script Python thu thập dữ liệu `cao_thong_tin_laptop.py` và `cao_chinh_sach.py` để tải thông số từ web, hệ thống sẽ tạo ra `du_lieu_laptop_raw.csv` và `du_lieu_chinh_sach.txt`.
+- Làm sạch (Cleaning): Chạy code xử lý Pandas `chuan_hoa_du_lieu_laptop.py` để chuẩn hóa định dạng giá, RAM, ổ cứng, tạo ra file `du_lieu_laptop_sach.csv`.
+- Nhúng dữ liệu (Embedding): Chạy code LangChain `cat_doan_ching_sach.py` để băm nhỏ file chính sách và lưu vào cơ sở dữ liệu vector tại thư mục `./db_chinh_sach`.
+4. Khởi chạy ứng dụng
+Sau khi kho tri thức đã sẵn sàng, khởi động giao diện Streamlit:
+```bash
+streamlit run app.py
+```
+5. Đánh giá hệ thống (Tùy chọn)
+Để đo lường hiệu năng của chatbot, chạy file Python `danh_gia_ragas.py`. Quá trình này sẽ sử dụng Llama 3 để tự động chấm điểm các chỉ số (Context Precision, Faithfulness, Answer Relevancy) và xuất kết quả ra file `bao_cao_ragas.csv`.
+
+👨‍💻 Tác Giả
+- Sinh viên thực hiện: Vũ Văn Thành
+- Giáo viên hướng dẫn: TS. Tưởng Văn Đạt - Đại học Bách Khoa Hà Nội

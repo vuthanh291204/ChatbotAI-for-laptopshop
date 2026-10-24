@@ -1,0 +1,12 @@
+beautifulsoup4 
+pandas 
+unidecode 
+langchain 
+langchain-google-genai 
+langchain-community 
+chromadb 
+sentence-transformers 
+streamlit 
+python-dotenv 
+ragas 
+datasets
